@@ -13,7 +13,7 @@ print("Loading Coqui VITS...")
 tts = TTS(model_name="tts_models/en/vctk/vits")
 
 print("Loading Whisper...")
-stt_model = whisper.load_model("large-v3")
+stt_model = whisper.load_model("medium")
 
 OUTPUT_AUDIO = "outputs/api_output.wav"
 

@@ -7,7 +7,7 @@ import whisper
 
 print("Loading Whisper Model...")
 
-model = whisper.load_model("large-v3")
+model = whisper.load_model("medium")
 
 audio_file = "outputs/p225.wav"
 
