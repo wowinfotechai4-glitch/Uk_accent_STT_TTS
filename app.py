@@ -34,7 +34,7 @@ def text_to_speech():
 
     data = request.json
 
-    text = data.get("text")
+    speaker = data.get("speaker", "p225")
 
     if not text:
         return jsonify({
@@ -43,7 +43,7 @@ def text_to_speech():
 
     tts.tts_to_file(
         text=text,
-        speaker="p225",
+        speaker=speaker,
         file_path=OUTPUT_AUDIO
     )
 
@@ -73,7 +73,7 @@ def full_pipeline():
 
     data = request.json
 
-    input_text = data.get("text")
+    speaker = data.get("speaker", "p225")
 
     if not input_text:
         return jsonify({
@@ -83,7 +83,7 @@ def full_pipeline():
     # Generate speech
     tts.tts_to_file(
         text=input_text,
-        speaker="p225",
+        speaker=speaker,
         file_path=OUTPUT_AUDIO
     )
 
