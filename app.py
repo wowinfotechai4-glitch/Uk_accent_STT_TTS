@@ -1,7 +1,7 @@
 import os
 import re
 import whisper
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, request, jsonify, send_file, render_template
 from TTS.api import TTS
 
 # FFmpeg path
@@ -22,9 +22,7 @@ OUTPUT_AUDIO = "outputs/api_output.wav"
 # -----------------------------
 @app.route("/")
 def home():
-    return jsonify({
-        "message": "UK Accent STT/TTS API Running"
-    })
+    return render_template("index.html")
 
 # -----------------------------
 # TTS API
@@ -33,6 +31,8 @@ def home():
 def text_to_speech():
 
     data = request.json
+
+    text = data.get("text")
 
     speaker = data.get("speaker", "p225")
 
@@ -48,10 +48,10 @@ def text_to_speech():
     )
 
     return send_file(
-    OUTPUT_AUDIO,
-    mimetype="audio/wav",
-    as_attachment=True
-)
+        OUTPUT_AUDIO,
+        mimetype="audio/wav",
+        as_attachment=False
+    )
 
 # -----------------------------
 # STT API
@@ -72,6 +72,8 @@ def speech_to_text():
 def full_pipeline():
 
     data = request.json
+
+    input_text = data.get("text")
 
     speaker = data.get("speaker", "p225")
 
@@ -94,6 +96,7 @@ def full_pipeline():
 
     # Accuracy checking
     clean_input = re.sub(r"[^\w\s]", "", input_text.lower()).strip()
+
     clean_output = re.sub(r"[^\w\s]", "", transcribed_text.lower()).strip()
 
     accuracy = "Perfect Match"
